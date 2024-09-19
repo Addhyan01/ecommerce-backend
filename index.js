@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require("cors");
+
+const Product = require("./db/Product")
+
 // const mongoose = require('mongoose');
 // const app = express();
 // const connectDB= async () =>{
@@ -38,11 +41,16 @@ app.post("/login", async (req, resp) => {
         else {
             resp.send({ result: "No user found" })
         }
-
     }
     else {
         resp.send({ result: "No user found" })
     }
+})
 
+
+app.post('/add-product', async (req, resp)=>{
+        let product = new Product(req.body);
+        let result = await product.save();
+        resp.send(result);
 })
 app.listen(5000);
